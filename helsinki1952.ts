@@ -87,6 +87,14 @@ function ObjektumFeltolto(feltoltendoElem: string[]): eredmenyekElem[] {
 }
 var eredmenyAdatok: eredmenyekElem[] = ObjektumFeltolto(eredmenyek);
 
+//Feltöltés ellenőrzése
+function adatKiir(adatok:eredmenyekElem[]):void{
+    for (let i:number=0;i<adatok.length;i++){
+        console.log(adatok[i].helyezes+"-"+adatok[i].sportolokSzama+"-"+adatok[i].sportTag+"-"+adatok[i].versenySzam)
+    }
+}
+adatKiir(eredmenyAdatok);
+
 //3. feladat
 function HanyPontszerzo(adatok: eredmenyekElem[]): number {
     var helyezes: number = 0;
@@ -154,26 +162,42 @@ function olimpiaiPontok(adatok: eredmenyekElem[]): number {
 console.log("Olimpiai pontok száma: " + olimpiaiPontok(eredmenyAdatok));
 
 //6. Legtöbb érem 
-function megTobbErmetSzereztek(adatok: eredmenyekElem[]): void {
+function megTobbErmetSzereztek(adatok: eredmenyekElem[]): string {
     let uszasErmek: number = 0;
     let tornaErmek: number = 0;
 
     for (let i: number = 0; i < adatok.length; i++) {
-        if (adatok[i].sportTag === 'uszas') {
-            uszasErmek += adatok[i].helyezes;
-        } else if (adatok[i].sportTag === 'torna') {
-            tornaErmek += adatok[i].helyezes;
+        if (adatok[i].sportTag === 'torna' && adatok[i].helyezes<=3) {
+            tornaErmek++;
+        } else if (adatok[i].sportTag === 'uszas' && adatok[i].helyezes<=3) {
+            uszasErmek++;
         }
+        else{}
     }
-
-    if (uszasErmek > tornaErmek) {
-        console.log('Az uszás sportágban szereztek több érmet a sportolók.');
-    } else if (tornaErmek > uszasErmek) {
-        console.log('A torna sportágban szereztek több érmet a sportolók.');
-    } else {
-        console.log('Egyenlő volt az érmek száma.');
+    if(uszasErmek>tornaErmek){
+        return "uszas";
+    }
+    else if(tornaErmek>uszasErmek){
+        return "torna";
+    }
+    else {
+        return "egyenlő";
     }
 }
+
+function megTobbErmetSzereztekKiir(gyakoribb:string):void{
+    console.log("6. feladat");
+    if(gyakoribb=="torna"){
+        console.log("Torna sportágban szereztek többet a sportolók")
+    }
+    else if(gyakoribb=="uszas"){
+        console.log("Uszas sportágban szereztek többet a sportolók")
+    }
+    else{
+        console.log("Egyenlő volt az érmek száma");
+    }
+}
+megTobbErmetSzereztekKiir(megTobbErmetSzereztek(eredmenyAdatok));
 
 megTobbErmetSzereztek(eredmenyAdatok);
 //7. Melyik helyezéshez a legtöbb sportoló

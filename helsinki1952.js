@@ -79,6 +79,13 @@ function ObjektumFeltolto(feltoltendoElem) {
     return beolvasottAdatok;
 }
 var eredmenyAdatok = ObjektumFeltolto(eredmenyek);
+//Feltöltés ellenőrzése
+function adatKiir(adatok) {
+    for (var i = 0; i < adatok.length; i++) {
+        console.log(adatok[i].helyezes + "-" + adatok[i].sportolokSzama + "-" + adatok[i].sportTag + "-" + adatok[i].versenySzam);
+    }
+}
+adatKiir(eredmenyAdatok);
 //3. feladat
 function HanyPontszerzo(adatok) {
     var helyezes = 0;
@@ -145,23 +152,37 @@ function megTobbErmetSzereztek(adatok) {
     var uszasErmek = 0;
     var tornaErmek = 0;
     for (var i = 0; i < adatok.length; i++) {
-        if (adatok[i].sportTag === 'uszas') {
-            uszasErmek += adatok[i].helyezes;
+        if (adatok[i].sportTag === 'torna' && adatok[i].helyezes <= 3) {
+            tornaErmek++;
         }
-        else if (adatok[i].sportTag === 'torna') {
-            tornaErmek += adatok[i].helyezes;
+        else if (adatok[i].sportTag === 'uszas' && adatok[i].helyezes <= 3) {
+            uszasErmek++;
         }
+        else { }
     }
     if (uszasErmek > tornaErmek) {
-        console.log('Az uszás sportágban szereztek több érmet a sportolók.');
+        return "uszas";
     }
     else if (tornaErmek > uszasErmek) {
-        console.log('A torna sportágban szereztek több érmet a sportolók.');
+        return "torna";
     }
     else {
-        console.log('Egyenlő volt az érmek száma.');
+        return "egyenlő";
     }
 }
+function megTobbErmetSzereztekKiir(gyakoribb) {
+    console.log("6. feladat");
+    if (gyakoribb == "torna") {
+        console.log("Torna sportágban szereztek többet a sportolók");
+    }
+    else if (gyakoribb == "uszas") {
+        console.log("Uszas sportágban szereztek többet a sportolók");
+    }
+    else {
+        console.log("Egyenlő volt az érmek száma");
+    }
+}
+megTobbErmetSzereztekKiir(megTobbErmetSzereztek(eredmenyAdatok));
 megTobbErmetSzereztek(eredmenyAdatok);
 //7. Melyik helyezéshez a legtöbb sportoló
 function legtobbSportolo(adatok) {
